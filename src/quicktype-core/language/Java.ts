@@ -726,9 +726,9 @@ export class JavaRenderer extends ConvenienceRenderer {
     protected emitClassAttributes(_c: ClassType, _className: Name): void {
         if (this._options.lombok) {
             this.emitLine("@lombok.Data");
-        }
-        if (this._options.builder) {
-            this.emitLine("@lombok.Builder");
+            if (this._options.builder) {
+                this.emitLine("@lombok.Builder");
+            }
         }
     }
 
