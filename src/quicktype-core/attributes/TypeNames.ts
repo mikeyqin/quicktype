@@ -17,7 +17,7 @@ export function initTypeNames(): void {
 initTypeNames();
 
 function makeRandomName(): string {
-    for (;;) {
+    for (; ;) {
         const name = `${chance.city()} ${chance.animal()}`;
         if (usedRandomNames.has(name)) continue;
         usedRandomNames.add(name);
@@ -105,7 +105,7 @@ export abstract class TypeNames {
         return TypeNames.makeWithDistance(names, alternativeNames, areInferred ? 1 : 0);
     }
 
-    constructor(readonly distance: number) {}
+    constructor(readonly distance: number) { }
 
     get areInferred(): boolean {
         return this.distance > 0;
@@ -169,7 +169,7 @@ export class RegularTypeNames extends TypeNames {
     }
 
     clearInferred(): TypeNames {
-        const newNames = this.areInferred ? new Set() : this.names;
+        const newNames = this.areInferred ? new Set<string>() : this.names;
         return TypeNames.makeWithDistance(newNames, new Set(), this.distance);
     }
 

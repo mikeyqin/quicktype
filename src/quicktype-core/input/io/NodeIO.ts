@@ -1,9 +1,9 @@
 import * as fs from "fs";
-import {Readable} from "readable-stream";
-import {isNode} from "browser-or-node";
-import {getStream} from "./get-stream";
+import { Readable } from "readable-stream";
+import { isNode } from "browser-or-node";
+import { getStream } from "./get-stream";
 
-import {messageError, panic} from "../../index";
+import { messageError, panic } from "../../index";
 
 // The typings for this module are screwy
 const isURL = require("is-url");
@@ -19,7 +19,7 @@ function parseHeaders(httpHeaders?: string[]): HttpHeaders {
     }
 
     return httpHeaders.reduce(
-        function(result: HttpHeaders, httpHeader: string) {
+        function (result: HttpHeaders, httpHeader: string) {
             if (httpHeader !== undefined && httpHeader.length > 0) {
                 const split = httpHeader.indexOf(":");
 
@@ -53,7 +53,7 @@ export async function readableFromFileOrURL(fileOrURL: string, httpHeaders?: str
             return fs.createReadStream(fileOrURL, "utf8") as unknown as Readable;
         }
     } catch (e) {
-        const message = typeof e.message === "string" ? e.message : "Unknown error";
+        const message = typeof (e as Error).message === "string" ? (e as Error).message : "Unknown error";
         return messageError("MiscReadError", { fileOrURL, message });
     }
     return messageError("DriverInputFileDoesNotExist", { filename: fileOrURL });
@@ -64,7 +64,7 @@ export async function readFromFileOrURL(fileOrURL: string, httpHeaders?: string[
     try {
         return await getStream(readable);
     } catch (e) {
-        const message = typeof e.message === "string" ? e.message : "Unknown error";
+        const message = typeof (e as Error).message === "string" ? (e as Error).message : "Unknown error";
         return messageError("MiscReadError", { fileOrURL, message });
     }
 }

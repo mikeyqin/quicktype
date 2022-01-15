@@ -585,7 +585,7 @@ function parseOptions(definitions: OptionDefinition[], argv: string[], partial: 
         opts = commandLineArgs(definitions, { argv, partial });
     } catch (e) {
         assert(!partial, "Partial option parsing should not have failed");
-        return messageError("DriverCLIOptionParsingFailed", { message: e.message });
+        return messageError("DriverCLIOptionParsingFailed", { message: (e as Error).message });
     }
     for (const k of Object.keys(opts)) {
         if (opts[k] === null) {

@@ -50,6 +50,7 @@ export const javaOptions = {
     // FIXME: Do this via a configurable named eventually.
     packageName: new StringOption("package", "Generated package name", "NAME", "io.quicktype"),
     lombok: new BooleanOption("lombok", "Use lombok", false, "primary"),
+    builder: new BooleanOption("builder", "Use lombok builder", false, "primary"),
     lombokCopyAnnotations: new BooleanOption("lombok-copy-annotations", "Copy accessor annotations", true, "secondary"),
 };
 
@@ -66,6 +67,7 @@ export class JavaTargetLanguage extends TargetLanguage {
             javaOptions.acronymStyle,
             javaOptions.packageName,
             javaOptions.lombok,
+            javaOptions.builder,
             javaOptions.lombokCopyAnnotations,
         ];
     }
@@ -724,6 +726,9 @@ export class JavaRenderer extends ConvenienceRenderer {
     protected emitClassAttributes(_c: ClassType, _className: Name): void {
         if (this._options.lombok) {
             this.emitLine("@lombok.Data");
+        }
+        if (this._options.builder) {
+            this.emitLine("@lombok.Builder");
         }
     }
 

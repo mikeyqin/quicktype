@@ -6,9 +6,9 @@ export type ErrorProperties =
 
     // Misc
     | {
-          kind: "MiscJSONParseError";
-          properties: { description: string; address: string; message: string };
-      }
+        kind: "MiscJSONParseError";
+        properties: { description: string; address: string; message: string };
+    }
     | { kind: "MiscReadError"; properties: { fileOrURL: string; message: string } }
     | { kind: "MiscUnicodeHighSurrogateWithoutLowSurrogate"; properties: {} }
     | { kind: "MiscInvalidMinMaxConstraint"; properties: { min: number; max: number } }
@@ -36,9 +36,9 @@ export type ErrorProperties =
     | { kind: "SchemaIDMustHaveAddress"; properties: { id: string; ref: Ref } }
     | { kind: "SchemaWrongAccessorEntryArrayLength"; properties: { operation: string; ref: Ref } }
     | {
-          kind: "SchemaSetOperationCasesIsNotArray";
-          properties: { operation: string; cases: any; ref: Ref };
-      }
+        kind: "SchemaSetOperationCasesIsNotArray";
+        properties: { operation: string; cases: any; ref: Ref };
+    }
     | { kind: "SchemaMoreThanOneUnionMemberName"; properties: { names: string[] } }
     | { kind: "SchemaCannotGetTypesFromBoolean"; properties: { ref: string } }
     | { kind: "SchemaCannotIndexArrayWithNonNumber"; properties: { actual: string; ref: Ref } }
@@ -195,7 +195,7 @@ export function messageError<N extends ErrorKinds>(kind: N, properties: ErrorPro
         userMessage = userMessage.replace("${" + name + "}", value);
     }
 
-    throw new QuickTypeError(message, kind, userMessage, properties);
+    throw new QuickTypeError(message, kind, userMessage, properties as StringMap);
 }
 
 export function messageAssert<N extends ErrorKinds>(
